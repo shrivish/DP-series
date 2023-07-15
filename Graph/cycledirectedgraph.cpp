@@ -1,31 +1,27 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-	bool dfsCheck(int node, vector<int> adj[], int vis[], int pathVis[]) {
-		vis[node] = 1;
-		pathVis[node] = 1;
-
-		for (auto it : adj[node]) {
-			if (!vis[it]) {
-				if (dfsCheck(it, adj, vis, pathVis) == true)
-					return true;
+	bool dfs(int node, vector<int> adj[], int vis[], int path[]) {
+		vis[node]=1;
+		path[node]=1;
+		for(auto it: adj[node]){
+			if(!vis[it]){
+				if(dfs(it,adj,vis,path)==true)return true;
 			}
-			else if (pathVis[it]) {
+			else if(path[it]){
 				return true;
 			}
 		}
-
-		pathVis[node] = 0;
+		path[node]=0;
 		return false;
 	}
 
 	bool isCyclic(int V, vector<int> adj[]) {
-		int vis[V] = {0};
-		int pathVis[V] = {0};
-
-		for (int i = 0; i < V; i++) {
-			if (!vis[i]) {
-				if (dfsCheck(i, adj, vis, pathVis) == true) return true;
+		int vis[V]={0};
+		int path[V]={0};
+		for(int i=0; i<V; i++){
+			if(!vis[i]){
+				if(dfs(i,adj,vis,path)==true)return true;
 			}
 		}
 		return false;
@@ -47,3 +43,5 @@ int main() {
 
 	return 0;
 }
+
+// or i can use only one vector array and then mark it as 1 as visited and mark it as 2 for path visited.
